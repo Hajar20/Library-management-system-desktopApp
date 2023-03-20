@@ -5,4 +5,6 @@ has finished, and also to use sonarLint which does almost the same job as the PM
 classify the code quality errors.
 
 
-Note : read the report of the project so you can easily understand how the application is being executed
+Note 1 : read the report of the project so you can easily understand how the application is being executed
+Note 2 : you will find all the generated reports of these plugins in project folder and note that you have 
+the right to do changes and regenerate them again and again. :)
