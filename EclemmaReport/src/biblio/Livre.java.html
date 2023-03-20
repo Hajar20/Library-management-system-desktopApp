@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Livre.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">GestionBiblio (11 mai 2020 22:25:38)</a> &gt; <a href="../../index.html" class="el_group">GestionBiblio</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">biblio</a> &gt; <span class="el_source">Livre.java</span></div><h1>Livre.java</h1><pre class="source lang-java linenums">package biblio;
+
+import java.io.Serializable;
+/**
+ * 
+ * @author hajar
+ *
+ */
+public class Livre implements Serializable{
+	private static final long serialVersionUID = 1L;
+	/**
+	 * @param idLiv
+	 */
+	private int idLiv;
+	/**
+	 * @param titre
+	 */
+	private String titre;
+	/**
+	 * @param auteur
+	 */
+	private String auteur;
+	/**
+	 * @param genre
+	 */
+	private String genre;
+	/**
+	 * @param quantite
+	 */
+	private int quantite;
+/**
+ * 
+ * @param idLivre
+ * @param titre
+ * @param genre
+ * @param auteur
+ * @param quantite
+ */
+<span class="fc" id="L39">	public Livre(int idLivre, String titre,String genre,String auteur, int quantite) {</span>
+<span class="fc" id="L40">		this.idLiv = idLivre;</span>
+<span class="fc" id="L41">		this.titre = titre;</span>
+<span class="fc" id="L42">		this.auteur = auteur;</span>
+<span class="fc" id="L43">		this.genre = genre;</span>
+<span class="fc" id="L44">		this.quantite = quantite;</span>
+<span class="fc" id="L45">	}</span>
+    
+	@Override
+	public String toString() {
+<span class="fc" id="L49">		return &quot;ID livre : &quot;+idLiv+&quot; ,Titre : &quot;+titre+&quot; ,Auteur : &quot;+auteur+&quot; ,Genre : &quot;+genre+&quot; ,Quantité : &quot;+quantite;</span>
+	}
+/**
+ * 
+ * @return
+ */
+	public int getId() {
+<span class="fc" id="L56">		return this.idLiv;</span>
+	}
+
+	public String getTitre() {
+<span class="fc" id="L60">		return titre;</span>
+	}
+
+	public void setTitre(String titre) {
+<span class="fc" id="L64">		this.titre = titre;</span>
+<span class="fc" id="L65">	}</span>
+
+	public String getAuteur() {
+<span class="fc" id="L68">		return auteur;</span>
+	}
+
+	public void setAuteur(String auteur) {
+<span class="fc" id="L72">		this.auteur = auteur;</span>
+<span class="fc" id="L73">	}</span>
+
+	public String getGenre() {
+<span class="fc" id="L76">		return genre;</span>
+	}
+
+	public void setGenre(String genre) {
+<span class="fc" id="L80">		this.genre = genre;</span>
+<span class="fc" id="L81">	}</span>
+
+	public int getQuantite() {
+<span class="fc" id="L84">		return quantite;</span>
+	}
+
+	public void setQuantite(int quantite) {
+<span class="fc" id="L88">		this.quantite = quantite;</span>
+<span class="fc" id="L89">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>GestionBiblio (11 mai 2020 22:25:38)</div></body></html>

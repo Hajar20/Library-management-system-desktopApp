@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>LivreTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">GestionBiblio (11 mai 2020 22:25:38)</a> &gt; <a href="../../index.html" class="el_group">GestionBiblio</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">testdesclasses</a> &gt; <span class="el_source">LivreTest.java</span></div><h1>LivreTest.java</h1><pre class="source lang-java linenums">package testdesclasses;
+
+import static org.junit.Assert.*;
+import org.junit.*;
+import biblio.*;
+/**
+ * 
+ * @author hajar
+ *
+ */
+<span class="fc" id="L11">public class LivreTest {</span>
+    /**
+     * @param lv1
+     */
+	private Livre lv1;
+	/**
+     * @param lv2
+     */
+	private Livre lv2;
+
+	@Before
+	/**
+	 * instantiation the objects lv1 and lv2 before test
+	 */
+	public void setUp() {
+<span class="fc" id="L26">		System.out.println(&quot;L'initialisation des deux livres :\n&quot;);</span>
+<span class="fc" id="L27">	lv1 = new Livre(1,&quot;JAVA&quot;,&quot;Programmation&quot;,&quot;Bouaabid&quot;,66);</span>
+<span class="fc" id="L28">	lv2 = new Livre(2,&quot;PHP&quot;,&quot;Programmation&quot;,&quot;Elhiaine&quot;,40);</span>
+<span class="fc" id="L29">	assertNotEquals(0,lv1.getQuantite());</span>
+<span class="fc" id="L30">    assertNotEquals(0,lv2.getQuantite());</span>
+<span class="fc" id="L31">	}</span>
+
+	@After
+	/**
+	 * make the object empty after test
+	 */
+	public void tearDown() {
+<span class="fc" id="L38">		lv1 = null;</span>
+<span class="fc" id="L39">		lv2 = null;</span>
+<span class="fc" id="L40">		assertNull(&quot;vérifier si lv2 est null&quot;,lv2);</span>
+<span class="fc" id="L41">		assertNull(&quot;vérifier si lv1 est null&quot;,lv1);</span>
+<span class="fc" id="L42">		System.out.println(&quot;\n&quot;+lv1+&quot;\n&quot;+lv2);</span>
+<span class="fc" id="L43">	}</span>
+
+	@Test
+	/**
+	 * testing the method toString()
+	 */
+	public void testToString() {
+<span class="fc" id="L50">		assertEquals(&quot;vérifier l'égalité&quot;,1,lv1.getId());</span>
+<span class="fc" id="L51">		assertEquals(&quot; vérifier l'égalité &quot;,&quot;JAVA&quot;,lv1.getTitre());</span>
+<span class="fc" id="L52">		assertNotEquals(&quot;prog&quot;,lv1.getGenre());</span>
+<span class="fc" id="L53">		assertNotSame(&quot;vérifier que auteur de lv2 n'est égale à Mr Hiane &quot;,&quot;Mr Hiane&quot;,lv2.getAuteur());</span>
+<span class="fc" id="L54">		assertNotNull(&quot; &quot;,lv2);</span>
+<span class="fc" id="L55">		assertNotNull(&quot; &quot;,lv1);</span>
+<span class="fc" id="L56">		System.out.println(lv1.toString()+&quot;\n&quot;);</span>
+<span class="fc" id="L57">		System.out.println(lv2.toString()+&quot;\n \n&quot;);</span>
+<span class="fc" id="L58">		lv1.setTitre(&quot;SQLServer&quot;);</span>
+<span class="fc" id="L59">		lv2.setAuteur(&quot;Hamid EL Hiaine&quot;);</span>
+<span class="fc" id="L60">		lv1.setQuantite(52);</span>
+<span class="fc" id="L61">		lv2.setGenre(&quot;BD&quot;);</span>
+<span class="fc" id="L62">		System.out.println(lv1.toString()+&quot;\n&quot;);</span>
+<span class="fc" id="L63">		System.out.println(lv2.toString()+&quot;\n \n&quot;);</span>
+<span class="fc" id="L64">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>GestionBiblio (11 mai 2020 22:25:38)</div></body></html>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>LocataireTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">GestionBiblio (11 mai 2020 22:25:38)</a> &gt; <a href="../../index.html" class="el_group">GestionBiblio</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">testdesclasses</a> &gt; <span class="el_source">LocataireTest.java</span></div><h1>LocataireTest.java</h1><pre class="source lang-java linenums">package testdesclasses;
+
+import static org.junit.Assert.*;
+import org.junit.*;
+import biblio.*;
+/**
+ * 
+ * @author hajar
+ *
+ */
+<span class="fc" id="L11">public class LocataireTest {</span>
+    /**
+     * @param lc1
+     */
+	private Locataire lc1;
+	 /**
+     * @param lc2
+     */
+    private Locataire lc2;
+	@Before
+	/**
+	 * instantiation lc1 and lc2 before test
+	 */
+	public void setUp(){
+<span class="fc" id="L25">		System.out.println(&quot;L'intialization des deux locataire :\n&quot;);</span>
+<span class="fc" id="L26">		lc1 = new Locataire(1,&quot;Hajar ait abdielmomin&quot;,&quot;2ème année&quot;,&quot;DSI&quot;,&quot;PHP&quot;);</span>
+<span class="fc" id="L27">		lc2 = new Locataire(2,&quot;Salma ait youssef&quot;,&quot;2ème année&quot;,&quot;DSI&quot;,&quot;JAVA&quot;);</span>
+<span class="fc" id="L28">		assertNotEquals(lc1.getId(),lc2.getId());</span>
+<span class="fc" id="L29">	}</span>
+
+	@After
+	/**
+	 * make lc1 and lc2 null after test
+	 */
+	public void tearDown() {
+<span class="fc" id="L36">		lc1 = null;</span>
+<span class="fc" id="L37">		lc2 = null;</span>
+<span class="fc" id="L38">	}</span>
+
+	@Test
+	/**
+	 * testing the method toString()
+	 */
+	public void testToString() {
+<span class="fc" id="L45">		assertNotNull(&quot;Making sure if it's not null&quot;,lc1);</span>
+<span class="fc" id="L46">		assertNotNull(&quot;Making sure if it's not null  &quot;,lc2);</span>
+<span class="fc" id="L47">		System.out.println(lc1.toString()+&quot;\n&quot;+lc2.toString());</span>
+<span class="fc" id="L48">		lc2.setLivre(&quot;Les mésirables&quot;);</span>
+<span class="fc" id="L49">		assertNotSame(&quot; &quot;,&quot;Java&quot;,lc2.getLivre());</span>
+<span class="fc" id="L50">		System.out.println(lc1.toString()+&quot;\n&quot;+lc2.toString());</span>
+<span class="fc" id="L51">	}</span>
+	
+
+	@Test
+	/**
+	 * testing a setter
+	 */
+	public void testSetNomPrenom() {
+<span class="fc" id="L59">		lc1.setNomPrenom(&quot;Zakaria jamal Eddine&quot;);</span>
+<span class="fc" id="L60">		assertNotEquals(&quot;Hajar ait abdielmomin&quot;,lc1.getNomPrenom());</span>
+<span class="fc" id="L61">		System.out.println(lc1.toString());</span>
+<span class="fc" id="L62">	}</span>
+
+	@Test
+	/**
+	 * testing a setter
+	 */
+	public void testSetNiveau() {
+<span class="fc" id="L69">		lc1.setNiveau(&quot;1ère année&quot;);</span>
+<span class="fc" id="L70">		assertNotEquals(&quot;2ème&quot;,lc1.getNiveau());</span>
+<span class="fc" id="L71">		System.out.println(lc1.toString());</span>
+<span class="fc" id="L72">	}</span>
+	@Test
+	/**
+	 * testing a setter
+	 */
+	public void testSetFiliere() {
+<span class="fc" id="L78">		lc1.setFiliere(&quot;PME/PMI&quot;);</span>
+<span class="fc" id="L79">		assertNotEquals(&quot;DSI&quot;,lc1.getFiliere());</span>
+<span class="fc" id="L80">		System.out.println(lc1.toString());</span>
+<span class="fc" id="L81">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>GestionBiblio (11 mai 2020 22:25:38)</div></body></html>

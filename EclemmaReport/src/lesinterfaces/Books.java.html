@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Books.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">GestionBiblio (11 mai 2020 22:25:38)</a> &gt; <a href="../../index.html" class="el_group">GestionBiblio</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">lesinterfaces</a> &gt; <span class="el_source">Books.java</span></div><h1>Books.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package lesinterfaces;</span>
+
+
+import javax.swing.*;
+import javax.swing.border.*;
+import javax.swing.table.*;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
+import java.util.List;
+import java.util.logging.*;
+
+import biblio.*;
+
+public class Books extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField txtNum;
+	private JTextField txtTitre;
+	private JTextField txtGenre;
+	private JTextField txtAuteur;
+	private JSpinner quantite;
+	private JTable listBooks;
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+<span class="nc" id="L30">		EventQueue.invokeLater(new Runnable() {</span>
+			public void run() {
+				try {
+<span class="nc" id="L33">					Books frame = new Books();</span>
+<span class="nc" id="L34">					frame.setVisible(true);</span>
+<span class="nc" id="L35">				} catch (Exception e) {</span>
+<span class="nc" id="L36">					Logger.getLogger(e.getMessage());</span>
+				}
+<span class="nc" id="L38">			}</span>
+		});
+<span class="nc" id="L40">	}</span>
+	/**
+	 * @param biblio1
+	 */
+<span class="nc" id="L44">	private Bibliotheque biblio1=new Bibliotheque();</span>
+    /**
+     * Complete the method
+     */
+	public void afficher(){
+<span class="nc" id="L49">    	List&lt;Livre&gt; books = biblio1.getTousLesLivres();</span>
+<span class="nc" id="L50">		DefaultTableModel model = new DefaultTableModel();</span>
+<span class="nc" id="L51">		model.setColumnIdentifiers(new String []{&quot;ID Livre&quot;,&quot;Titre&quot;,&quot;Genre&quot;,&quot;Auteur&quot;,&quot;Quantité&quot;});</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">		for (Livre lv:books){</span>
+<span class="nc" id="L53">			model.addRow(new Object[]{lv.getId(),lv.getTitre(),lv.getGenre(),lv.getAuteur(),lv.getQuantite()});</span>
+		}
+<span class="nc" id="L55">		listBooks.setModel(model);</span>
+<span class="nc" id="L56">    }</span>
+	/**
+	 * 
+	 * @return
+	 */
+    public boolean formValid(){
+<span class="nc" id="L62">		final int nbre = Integer.parseInt(quantite.getValue().toString());</span>
+<span class="nc bnc" id="L63" title="All 10 branches missed.">    	return (!(txtNum.getText().trim().equals(&quot;&quot;)) &amp;&amp; !(txtTitre.getText().trim().equals(&quot;&quot;)) &amp;&amp; !(txtGenre.getText().trim().equals(&quot;&quot;)) &amp;&amp; !(txtAuteur.getText().trim().equals(&quot;&quot;)) &amp;&amp; nbre &gt; 1 ) ;</span>
+    }
+    /**
+     * 
+     * @return
+     */
+    public boolean cleExiste(){
+<span class="nc" id="L70">    	final String req = &quot;select * from livre where idLiv = '&quot;+txtNum.getText()+&quot;'&quot;;</span>
+<span class="nc" id="L71">    	final ResultSet reslt = Connect.getInstance().lire(req);</span>
+    	try {
+<span class="nc" id="L73">    		return reslt.next();</span>
+<span class="nc" id="L74">    	} catch (SQLException e) {return false;}</span>
+    	finally {
+    		try {
+<span class="nc" id="L77">				reslt.close();</span>
+<span class="nc" id="L78">			} catch (SQLException e) {</span>
+<span class="nc" id="L79">				e.printStackTrace();</span>
+			}
+    	}
+    }
+	/**
+	 * Create the frame.
+	 */
+<span class="nc" id="L86">	public Books() {</span>
+<span class="nc" id="L87">		addWindowListener(new WindowAdapter() {</span>
+			@Override
+			public void windowOpened(WindowEvent arg0) {
+<span class="nc" id="L90">				afficher();</span>
+<span class="nc" id="L91">			}</span>
+		});
+<span class="nc" id="L93">		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L94">		setBounds(100, 100, 607, 506);</span>
+<span class="nc" id="L95">		contentPane = new JPanel();</span>
+<span class="nc" id="L96">		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));</span>
+<span class="nc" id="L97">		setContentPane(contentPane);</span>
+<span class="nc" id="L98">		contentPane.setLayout(null);</span>
+		
+<span class="nc" id="L100">		final JLabel label = new JLabel(&quot;Gestion des livres&quot;);</span>
+<span class="nc" id="L101">		label.setFont(new Font(&quot;Arial Rounded MT Bold&quot;, Font.BOLD, 22));</span>
+<span class="nc" id="L102">		label.setBounds(187, 11, 222, 38);</span>
+<span class="nc" id="L103">		contentPane.add(label);</span>
+		
+<span class="nc" id="L105">		final JLabel label1 = new JLabel(&quot;Num\u00E9ro de livre :&quot;);</span>
+<span class="nc" id="L106">		label1.setFont(new Font(&quot;Arial Rounded MT Bold&quot;, Font.BOLD, 13));</span>
+<span class="nc" id="L107">		label1.setBounds(37, 235, 140, 28);</span>
+<span class="nc" id="L108">		contentPane.add(label1);</span>
+		
+<span class="nc" id="L110">		final JLabel label2 = new JLabel(&quot;Titre :&quot;);</span>
+<span class="nc" id="L111">		label2.setFont(new Font(&quot;Arial Rounded MT Bold&quot;, Font.BOLD, 13));</span>
+<span class="nc" id="L112">		label2.setBounds(37, 274, 140, 26);</span>
+<span class="nc" id="L113">		contentPane.add(label2);</span>
+		
+<span class="nc" id="L115">		final JLabel label3 = new JLabel(&quot;Genre :&quot;);</span>
+<span class="nc" id="L116">		label3.setFont(new Font(&quot;Arial Rounded MT Bold&quot;, Font.BOLD, 13));</span>
+<span class="nc" id="L117">		label3.setBounds(37, 311, 140, 25);</span>
+<span class="nc" id="L118">		contentPane.add(label3);</span>
+		
+<span class="nc" id="L120">		final JLabel label4 = new JLabel(&quot;Quantit\u00E9 :&quot;);</span>
+<span class="nc" id="L121">		label4.setFont(new Font(&quot;Arial Rounded MT Bold&quot;, Font.BOLD, 13));</span>
+<span class="nc" id="L122">		label4.setBounds(37, 381, 140, 28);</span>
+<span class="nc" id="L123">		contentPane.add(label4);</span>
+		
+<span class="nc" id="L125">		final JLabel label5 = new JLabel(&quot;L'auteur :&quot;);</span>
+<span class="nc" id="L126">		label5.setFont(new Font(&quot;Arial Rounded MT Bold&quot;, Font.BOLD, 13));</span>
+<span class="nc" id="L127">		label5.setBounds(37, 347, 140, 26);</span>
+<span class="nc" id="L128">		contentPane.add(label5);</span>
+		
+<span class="nc" id="L130">		txtNum = new JTextField();</span>
+<span class="nc" id="L131">		txtNum.setFont(new Font(&quot;Arial Rounded MT Bold&quot;, Font.BOLD, 12));</span>
+<span class="nc" id="L132">		txtNum.setColumns(10);</span>
+<span class="nc" id="L133">		txtNum.setBounds(187, 240, 158, 20);</span>
+<span class="nc" id="L134">		contentPane.add(txtNum);</span>
+		
+<span class="nc" id="L136">		txtTitre = new JTextField();</span>
+<span class="nc" id="L137">		txtTitre.setFont(new Font(&quot;Arial Rounded MT Bold&quot;, Font.BOLD, 12));</span>
+<span class="nc" id="L138">		txtTitre.setColumns(10);</span>
+<span class="nc" id="L139">		txtTitre.setBounds(187, 278, 158, 20);</span>
+<span class="nc" id="L140">		contentPane.add(txtTitre);</span>
+		
+<span class="nc" id="L142">		txtGenre = new JTextField();</span>
+<span class="nc" id="L143">		txtGenre.setFont(new Font(&quot;Arial Rounded MT Bold&quot;, Font.BOLD, 12));</span>
+<span class="nc" id="L144">		txtGenre.setColumns(10);</span>
+<span class="nc" id="L145">		txtGenre.setBounds(187, 314, 158, 20);</span>
+<span class="nc" id="L146">		contentPane.add(txtGenre);</span>
+		
+<span class="nc" id="L148">		txtAuteur = new JTextField();</span>
+<span class="nc" id="L149">		txtAuteur.setFont(new Font(&quot;Arial Rounded MT Bold&quot;, Font.BOLD, 12));</span>
+<span class="nc" id="L150">		txtAuteur.setColumns(10);</span>
+<span class="nc" id="L151">		txtAuteur.setBounds(187, 351, 158, 20);</span>
+<span class="nc" id="L152">		contentPane.add(txtAuteur);</span>
+		
+<span class="nc" id="L154">		final JButton btnAdd = new JButton(&quot;Ajouter&quot;);</span>
+<span class="nc" id="L155">		btnAdd.addActionListener(new ActionListener() {</span>
+			/**
+			 * add your handling code here:
+			 */
+			public void actionPerformed(ActionEvent arg0) {
+<span class="nc bnc" id="L160" title="All 2 branches missed.">				if (!formValid()){</span>
+<span class="nc" id="L161">					JOptionPane.showMessageDialog(null, &quot;Formulaire est invalide!&quot;);</span>
+<span class="nc" id="L162">				    return ;</span>
+				}
+<span class="nc bnc" id="L164" title="All 2 branches missed.">				if (cleExiste()){</span>
+<span class="nc" id="L165">					JOptionPane.showMessageDialog(null, &quot;Le livre est déjà existe!&quot;);</span>
+<span class="nc" id="L166">				    return ;</span>
+				}
+<span class="nc" id="L168">				    int qt = Integer.parseInt(quantite.getValue().toString());</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">				    if (biblio1.addLivre(Integer.parseInt(txtNum.getText()), txtTitre.getText(), txtGenre.getText(), txtAuteur.getText(), qt))</span>
+<span class="nc" id="L170">				    	{JOptionPane.showMessageDialog(null, &quot;Nouveau livre est ajouté&quot;);}</span>
+				    else
+<span class="nc" id="L172">				    	{JOptionPane.showMessageDialog(null, &quot;Erreur d'insertion!!&quot;);}</span>
+<span class="nc" id="L173">				    afficher();    </span>
+<span class="nc" id="L174">			}</span>
+		});
+<span class="nc" id="L176">		btnAdd.setFont(new Font(&quot;Arial Rounded MT Bold&quot;, Font.BOLD, 13));</span>
+<span class="nc" id="L177">		btnAdd.setBounds(447, 225, 121, 23);</span>
+<span class="nc" id="L178">		contentPane.add(btnAdd);</span>
+		
+<span class="nc" id="L180">		final JButton btnDel = new JButton(&quot;Supprimer&quot;);</span>
+<span class="nc" id="L181">		btnDel.addActionListener(new ActionListener() {</span>
+			/**
+			 * add your handling code here:
+			 */
+			public void actionPerformed(ActionEvent arg0) {
+<span class="nc" id="L186">				int line = listBooks.getSelectedRow();</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">				if (line==-1)</span>
+<span class="nc" id="L188">				{JOptionPane.showMessageDialog(null, &quot;Aucun ligne sélectionnée!&quot;);return;}</span>
+<span class="nc" id="L189">				int rep = JOptionPane.showConfirmDialog(null, &quot;Voulez vous vraiment supprimer ce livre?&quot;,&quot;Boîte de confirmation&quot;,JOptionPane.YES_NO_OPTION);</span>
+				
+<span class="nc bnc" id="L191" title="All 2 branches missed.">				if (rep == JOptionPane.YES_OPTION){</span>
+<span class="nc" id="L192">		        	int ligne = Integer.parseInt(listBooks.getValueAt(line,0).toString());</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">		        	if (biblio1.delLivre(ligne)){</span>
+<span class="nc" id="L194">		        		JOptionPane.showMessageDialog(null, &quot;Le livre '&quot;+listBooks.getValueAt(line, 1)+&quot;' est supprimé.&quot;);</span>
+<span class="nc" id="L195">		        	}</span>
+		        		else
+<span class="nc" id="L197">		        		{JOptionPane.showMessageDialog(null, &quot;Erreur de la suppression!!&quot;);}</span>
+				}
+<span class="nc" id="L199">		        	afficher();     </span>
+<span class="nc" id="L200">		}});</span>
+<span class="nc" id="L201">		btnDel.setFont(new Font(&quot;Arial Rounded MT Bold&quot;, Font.BOLD, 13));</span>
+<span class="nc" id="L202">		btnDel.setBounds(447, 259, 121, 23);</span>
+<span class="nc" id="L203">		contentPane.add(btnDel);</span>
+		
+<span class="nc" id="L205">		final JButton btnAff = new JButton(&quot;Afficher&quot;);</span>
+<span class="nc" id="L206">		btnAff.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent arg0) {
+<span class="nc" id="L208">					List&lt;Livre&gt; a=biblio1.getLivre(Integer.parseInt(txtNum.getText()));</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">					for(Livre l:a){</span>
+<span class="nc" id="L210">						txtTitre.setText(l.getTitre());</span>
+<span class="nc" id="L211">						txtGenre.setText(l.getGenre());</span>
+<span class="nc" id="L212">						txtAuteur.setText(l.getAuteur());</span>
+<span class="nc" id="L213">						quantite.setValue(l.getQuantite());</span>
+					}
+<span class="nc" id="L215">			}</span>
+		});
+<span class="nc" id="L217">		btnAff.setFont(new Font(&quot;Arial Rounded MT Bold&quot;, Font.BOLD, 13));</span>
+<span class="nc" id="L218">		btnAff.setBounds(447, 327, 121, 23);</span>
+<span class="nc" id="L219">		contentPane.add(btnAff);</span>
+		
+<span class="nc" id="L221">		JButton btnUpdate = new JButton(&quot;Modifier&quot;);</span>
+<span class="nc" id="L222">		btnUpdate.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent arg0) {
+<span class="nc bnc" id="L224" title="All 2 branches missed.">				if (!formValid()){</span>
+<span class="nc" id="L225">					JOptionPane.showMessageDialog(null, &quot;Formulaire est invalide!!&quot;);</span>
+<span class="nc" id="L226">					return;</span>
+				}
+<span class="nc bnc" id="L228" title="All 2 branches missed.">				if (!cleExiste()){</span>
+<span class="nc" id="L229">					JOptionPane.showMessageDialog(null, &quot;Le livre que tu veut le modifier n'existe pas!!&quot;);</span>
+<span class="nc" id="L230">					return;</span>
+				}
+<span class="nc bnc" id="L232" title="All 2 branches missed.">				if (biblio1.updateLivre(Integer.parseInt(txtNum.getText()), txtTitre.getText(), txtGenre.getText(), txtAuteur.getText(), Integer.parseInt(quantite.getValue().toString())))</span>
+<span class="nc" id="L233">				    JOptionPane.showMessageDialog(null, &quot;Mise à jour effectué avec succès.&quot;);		</span>
+				else
+<span class="nc" id="L235">			    	JOptionPane.showMessageDialog(null, &quot;Erreur de mise à jour!!&quot;);</span>
+		
+<span class="nc" id="L237">			    afficher();</span>
+<span class="nc" id="L238">			}</span>
+		});
+<span class="nc" id="L240">		btnUpdate.setFont(new Font(&quot;Arial Rounded MT Bold&quot;, Font.BOLD, 13));</span>
+<span class="nc" id="L241">		btnUpdate.setBounds(447, 293, 121, 23);</span>
+<span class="nc" id="L242">		contentPane.add(btnUpdate);</span>
+		
+<span class="nc" id="L244">		JLabel label6 = new JLabel(&quot;Liste des livres :&quot;);</span>
+<span class="nc" id="L245">		label6.setFont(new Font(&quot;Arial Rounded MT Bold&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L246">		label6.setBounds(37, 50, 140, 28);</span>
+<span class="nc" id="L247">		contentPane.add(label6);</span>
+		
+		
+<span class="nc" id="L250">		JButton btnExit = new JButton(&quot;Quitter&quot;);</span>
+<span class="nc" id="L251">		btnExit.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent arg0) {
+				int choice;
+<span class="nc" id="L254">				choice = JOptionPane.showConfirmDialog(null, &quot;Voulez vous vraiment quitter l'application?&quot;,&quot;Confirmer&quot;,JOptionPane.YES_NO_OPTION);</span>
+<span class="nc bnc" id="L255" title="All 2 branches missed.">				if (choice == JOptionPane.YES_OPTION)</span>
+<span class="nc" id="L256">					System.exit(0);</span>
+<span class="nc" id="L257">			}</span>
+		});
+<span class="nc" id="L259">		btnExit.setFont(new Font(&quot;Arial Rounded MT Bold&quot;, Font.BOLD, 13));</span>
+<span class="nc" id="L260">		btnExit.setBounds(447, 361, 121, 23);</span>
+<span class="nc" id="L261">		contentPane.add(btnExit);</span>
+		
+<span class="nc" id="L263">		JButton btnLoc = new JButton(&quot;Gestion des locataires&quot;);</span>
+<span class="nc" id="L264">		btnLoc.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent arg0) {
+<span class="nc" id="L266">				new Locataires().setVisible(true);</span>
+				
+<span class="nc" id="L268">			}</span>
+		});
+<span class="nc" id="L270">		btnLoc.setForeground(Color.BLACK);</span>
+<span class="nc" id="L271">		btnLoc.setFont(new Font(&quot;Arial Rounded MT Bold&quot;, Font.BOLD, 13));</span>
+<span class="nc" id="L272">		btnLoc.setBounds(37, 430, 308, 23);</span>
+<span class="nc" id="L273">		contentPane.add(btnLoc);</span>
+		
+<span class="nc" id="L275">		quantite = new JSpinner();</span>
+<span class="nc" id="L276">		quantite.setModel(new SpinnerNumberModel(Integer.valueOf(1), null, null, Integer.valueOf(1)));</span>
+<span class="nc" id="L277">		quantite.setFont(new Font(&quot;Arial Rounded MT Bold&quot;, Font.BOLD, 12));</span>
+<span class="nc" id="L278">		quantite.setBounds(187, 386, 158, 20);</span>
+<span class="nc" id="L279">		contentPane.add(quantite);</span>
+		
+<span class="nc" id="L281">		JButton btnClear = new JButton(&quot;Effacer&quot;);</span>
+<span class="nc" id="L282">		btnClear.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent arg0) {
+<span class="nc" id="L284">				txtNum.setText(&quot;&quot;); txtTitre.setText(&quot;&quot;);txtGenre.setText(&quot;&quot;);txtAuteur.setText(&quot;&quot;);quantite.setValue(1);</span>
+<span class="nc" id="L285">			}</span>
+		});
+<span class="nc" id="L287">		btnClear.setFont(new Font(&quot;Arial Rounded MT Bold&quot;, Font.BOLD, 13));</span>
+<span class="nc" id="L288">		btnClear.setBounds(447, 395, 121, 23);</span>
+<span class="nc" id="L289">		contentPane.add(btnClear);</span>
+		
+<span class="nc" id="L291">		JPanel panel = new JPanel();</span>
+<span class="nc" id="L292">		panel.setBounds(36, 76, 532, 138);</span>
+<span class="nc" id="L293">		contentPane.add(panel);</span>
+<span class="nc" id="L294">		panel.setLayout(null);</span>
+		
+<span class="nc" id="L296">		JScrollPane scrollPane = new JScrollPane();</span>
+<span class="nc" id="L297">		scrollPane.setBounds(0, 0, 532, 138);</span>
+<span class="nc" id="L298">		panel.add(scrollPane);</span>
+		
+<span class="nc" id="L300">		listBooks = new JTable();</span>
+<span class="nc" id="L301">		scrollPane.setViewportView(listBooks);</span>
+<span class="nc" id="L302">	}</span>
+	public TableModel getListBooksModel() {
+<span class="nc" id="L304">		return listBooks.getModel();</span>
+	}
+	public void setListBooksModel(TableModel model) {
+<span class="nc" id="L307">		listBooks.setModel(model);</span>
+<span class="nc" id="L308">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>GestionBiblio (11 mai 2020 22:25:38)</div></body></html>
